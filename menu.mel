@@ -1,0 +1,66 @@
+proc randomNode()
+{
+    polySphere; 
+    instancer; 
+    createNode randomNode; 
+    connectAttr pSphere1.matrix instancer1.inputHierarchy[0]; 
+    connectAttr randomNode1.outPoints instancer1.inputPoints; 
+}
+
+proc randomNodeSelected()
+{
+    string $selObjs[] = `ls -sl`;
+    string $selShape = $selObjs[0] + ".matrix";
+    instancer; 
+    createNode randomNode; 
+    connectAttr $selShape instancer1.inputHierarchy[0]; 
+    connectAttr randomNode1.outPoints instancer1.inputPoints; 
+}
+
+proc lSystemInstance()
+{
+    polySphere -n lSystemSphere;
+    polyCube -n lSystemCube;
+    instancer -n instancerSphere;
+    instancer -n instancerCube;
+    createNode lSystemNode -n lSystemCurNode;
+    connectAttr lSystemCube.matrix instancerCube.inputHierarchy[0];
+    connectAttr lSystemSphere.matrix instancerSphere.inputHierarchy[0];
+    connectAttr lSystemCurNode.outBranches instancerCube.inputPoints;
+    connectAttr lSystemCurNode.outFlowers instancerSphere.inputPoints; 
+}
+
+proc lSystemInstanceSelected()
+{
+    string $selObjs[] = `ls -sl`;
+    string $selShape1 = $selObjs[0];
+    if($selShape1 == "")
+    {
+        return;    
+    }
+    $selShape1 = $selObjs[0] + ".matrix";
+    
+    string $selShape2 = $selObjs[1];
+    if($selShape2 == "")
+    {
+        return;    
+    }
+    $selShape2 = $selObjs[1] + ".matrix";
+
+    instancer -n instancerSphere;
+    instancer -n instancerCube;
+    createNode lSystemNode -n lSystemCurNode;
+    connectAttr $selShape1 instancerCube.inputHierarchy[0];
+    connectAttr $selShape2 instancerSphere.inputHierarchy[0];
+    connectAttr lSystemCurNode.outBranches instancerCube.inputPoints;
+    connectAttr lSystemCurNode.outFlowers instancerSphere.inputPoints; 
+}
+
+global string $gMainWindow;
+setParent $gMainWindow;
+menu -label "LSystemInstance" -tearOff true;
+    menuItem -label "randomNode" -command "randomNode()";
+    menuItem -label "randomNodeSelected" -command "randomNodeSelected()";
+    menuItem -label "lSystemInstance" -command "lSystemInstance()";
+    menuItem -label "lSystemInstanceSelected" -command "lSystemInstanceSelected()";
+    

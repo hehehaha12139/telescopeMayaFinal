@@ -1,0 +1,30 @@
+﻿  MeshReduceNode.cpp
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\global.h(22,1): warning C4005: “M_PI”: 宏重定义
+C:\Program Files\Autodesk\Maya2019\include\maya\MTypes.h(195): message : 参见“M_PI”的前一个定义
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(57,1): warning C4996: 'Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create': Use the other MFnTypedAttribute::create method instead.
+C:\Program Files\Autodesk\Maya2019\include\maya\MFnTypedAttribute.h(66): message : 参见“Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create”的声明
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(93,1): warning C4996: 'Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create': Use the other MFnTypedAttribute::create method instead.
+C:\Program Files\Autodesk\Maya2019\include\maya\MFnTypedAttribute.h(66): message : 参见“Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create”的声明
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(98,1): warning C4996: 'Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create': Use the other MFnTypedAttribute::create method instead.
+C:\Program Files\Autodesk\Maya2019\include\maya\MFnTypedAttribute.h(66): message : 参见“Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create”的声明
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(102,1): warning C4996: 'Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create': Use the other MFnTypedAttribute::create method instead.
+C:\Program Files\Autodesk\Maya2019\include\maya\MFnTypedAttribute.h(66): message : 参见“Autodesk::Maya::OpenMaya20190000::MFnTypedAttribute::create”的声明
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(242,41): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(243,37): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(248,8): warning C4804: “<”: 在操作中使用类型“bool”不安全
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(249,1): warning C4804: “<”: 在操作中使用类型“bool”不安全
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(250,1): warning C4804: “<”: 在操作中使用类型“bool”不安全
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(277,9): warning C4804: “<”: 在操作中使用类型“bool”不安全
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(278,1): warning C4804: “<”: 在操作中使用类型“bool”不安全
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(279,1): warning C4804: “<”: 在操作中使用类型“bool”不安全
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(436,40): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(437,36): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(747,39): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(829,47): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(864,42): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(865,47): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+  GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\MeshReduceNode.cpp(529): warning C4700: 使用了未初始化的局部变量“faceCounts”
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1274,5): warning MSB8012: TargetPath(E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\x64\Debug\TelescopeMaya.mll) does not match the Linker's OutputFile property value (E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\Telescoped.mll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1276,5): warning MSB8012: TargetName(TelescopeMaya) does not match the Linker's OutputFile property value (Telescoped). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+  MyPlugin.vcxproj -> E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\x64\Debug\TelescopeMaya.mll

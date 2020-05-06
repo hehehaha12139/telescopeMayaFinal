@@ -1,0 +1,17 @@
+﻿  cube.cpp
+  curve.cpp
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\discrete.h(277,45): warning C4305: “初始化”: 从“double”到“float”截断
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\curve.cpp(264,78): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\curve.cpp(434,25): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\curve.cpp(453,21): warning C4244: “初始化”: 从“genType”转换到“int”，可能丢失数据
+          with
+          [
+              genType=float
+          ]
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\curve.cpp(492,17): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\curve.cpp(550,17): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+  GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  正在生成代码...
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1274,5): warning MSB8012: TargetPath(E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\.\bin\Telescoped.exe) does not match the Linker's OutputFile property value (E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\bin\LSystemd.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1276,5): warning MSB8012: TargetName(Telescoped) does not match the Linker's OutputFile property value (LSystemd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+  MyExe.vcxproj -> E:\Learning\CIS660\AuthoringTool\TelescopeMaya\Telescope\.\bin\Telescoped.exe

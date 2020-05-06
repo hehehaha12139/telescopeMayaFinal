@@ -1,0 +1,213 @@
+proc createCurveSelected()
+{
+    string $selObjs[] = `ls -sl`;
+    int $ctrlPointSize = (size($selObjs) - 1) * 4;
+    int $pointSize = (size($selObjs) - 1) * 100 + size($selObjs);
+    createNode CurveGenNode;
+    vector $newArray[];
+    //setAttr CurveGenNode1.isAdding true;
+    for($i = 0; $i < size($selObjs); ++$i)
+    {
+        string $objectTrans = $selObjs[$i] + ".translate";
+        connectAttr -f $objectTrans CurveGenNode1.splineKeys[$i];
+    }
+    
+    // Connect first control point
+    if(`objExists curve1`)
+    {
+        curve -d 1 -r -p 0 0 0 curve1;
+    }
+    else
+    {
+        curve -d 1 -p 0 0 0 -n curve1;
+    }
+    
+    connectAttr CurveGenNode1.ctrlPoints[0] curve1.cv[0];
+    
+    for($i = 1; $i < $pointSize; ++$i)
+    {
+        curve -a -p 0 0 0 curve1;
+        connectAttr CurveGenNode1.ctrlPoints[$i] curve1.cv[$i];
+    }
+}
+
+proc addCurve()
+{
+    if (`objExists telescope`) delete telescope;
+    if (`objExists telescopeShape`) delete telescopeShape; 
+    
+    createNode transform -n telescope;
+    createNode mesh -n telescopeShape -p telescope;
+    sets -add initialShadingGroup telescopeShape;
+    
+    connectAttr CurveOptNode1.outGeo telescopeShape.inMesh;
+}
+
+proc optCurveSelected()
+{
+    // Connect first control point
+    if(`objExists "curve1"`)
+    {
+        createNode CurveOptNode;
+        int $pointSize = `getAttr -size curveShape1.controlPoints`;
+        for($i = 0; $i < $pointSize; ++$i)
+        {
+            connectAttr curve1.cv[$i] CurveOptNode1.curvePoints[$i];
+        }
+        
+        if(`objExists curveOpt`)
+        {
+            print("ExistCurve");
+            curve -d 1 -r -p 0 0 0 curveOpt;
+        }
+        else
+        {
+            print("newCurve");
+            curve -d 1 -p 0 0 0 -n curveOpt;
+        }
+        setAttr CurveOptNode1.isAdding true;
+        connectAttr CurveOptNode1.optPoints[0] curveOpt.cv[0];
+    }
+    
+}
+
+proc loadObj() 
+{
+    
+    string $content = "";
+    string $fileName[] = `fileDialog2 -fm 1 -fileFilter "Obj Files(*.obj)"`;
+   
+    if(`objExists MeshReduceNode1`)
+    {
+        delete MeshReduceNode1;
+    }
+    createNode MeshReduceNode -n MeshReduceNode1;
+    
+    setAttr MeshReduceNode1.inFileName -type "string" $fileName[0];
+    
+    createNode multiplyDivide -n md1;
+
+    if(`objExists curveTemp`)
+    {
+        curve -d 1 -r -p 0 0 0 curveTemp;
+    }
+    else
+    {
+        curve -d 1 -p 0 0 0 -n curveTemp;
+    }
+       
+    if (`objExists reduceMesh`) delete reduceMesh;
+    if (`objExists reduceMeshShape`) delete reduceMeshShape; 
+    
+    createNode transform -n reduceMesh;
+    createNode mesh -n reduceMeshShape -p reduceMesh;
+    sets -add initialShadingGroup reduceMeshShape;
+    
+    connectAttr MeshReduceNode1.outGeo reduceMeshShape.inMesh;
+
+    getAttr MeshReduceNode1.outCurves[0];
+    connectAttr MeshReduceNode1.outJoints[0] curveTemp.cv[0];
+    
+    int $curveCount = `getAttr MeshReduceNode1.outCurveCount`;
+    print("CurveCount");
+    print($curveCount);   
+}
+
+proc optObj()
+{
+    disconnectAttr MeshReduceNode1.outGeo reduceMeshShape.inMesh;
+    delete reduceMesh;
+    int $ctrlPointCount = `getAttr MeshReduceNode1.outCtrlPointCount`;
+    int $curveCount = `getAttr MeshReduceNode1.outCurveCount`;
+    int $curCurve = 0;
+    string $curveName = "";
+    int $curveKeyCount = 0;
+    for($i = 0; $i < $ctrlPointCount; $i++)
+    {   
+        float $curvew = `getAttr MeshReduceNode1.outCurves[$i].outCurves3`;
+        print($curvew);
+        $curveKeyCount += 1;
+    }
+    
+    print("SecondTest\n");
+    
+   
+    for($i = 0; $i < $ctrlPointCount; $i++)
+    {   
+        float $curvex = `getAttr MeshReduceNode1.outCurves[$i].outCurves0`;
+        float $curvey = `getAttr MeshReduceNode1.outCurves[$i].outCurves1`;
+        float $curvez = `getAttr MeshReduceNode1.outCurves[$i].outCurves2`;
+        float $curvew = `getAttr MeshReduceNode1.outCurves[$i].outCurves3`;
+        if($curvew == -1)
+        {
+            // New Curve
+            print("newCurve!\n");
+            $curveName = "meshCurve" + $curCurve;
+            $curCurve += 1;
+            
+            if(`objExists $curveName`)
+            {
+                curve -d 1 -r -p $curvex $curvey $curvez $curveName;
+            }
+            else
+            {
+                curve -d 1 -p $curvex $curvey $curvez -n $curveName;
+            }
+        }
+        else
+        {
+            curve -a -p $curvex $curvey $curvez $curveName;
+        }
+    }
+}
+
+proc genMesh()
+{
+    int $curveCount = `getAttr MeshReduceNode1.outCurveCount`;
+    for($i = 0; $i < $curveCount; ++$i)
+    {
+        string $meshOptName = "meshOpt" + $i;
+        if(`objExists $meshOptName`) delete $meshOptName;
+        createNode CurveOptNode -n $meshOptName;
+        string $curveName = "meshCurve" + $i;
+        string $cpName = $curveName + ".controlPoints";
+        int $cpCount = `getAttr -size $cpName`;
+        for($j = 0;  $j < $cpCount; $j++)
+        {
+            string $xString = $curveName + ".controlPoints[" + $j + "].xValue";
+            string $yString = $curveName + ".controlPoints[" + $j + "].yValue";
+            string $zString = $curveName + ".controlPoints[" + $j + "].zValue";
+            
+            float $curvex = `getAttr $xString`;
+            float $curvey = `getAttr $yString`;
+            float $curvez = `getAttr $zString`;
+            
+            string $optChara = $meshOptName + "." + "curvePoints" + "[" + $j + "]";
+            setAttr $optChara -type float3 $curvex $curvey $curvez;
+        }
+        
+        string $optedMeshName = "optedMesh" + $i;
+        string $optedMeshShapeName = "optedMeshShape" + $i;
+        if (`objExists $optedMeshName`) delete $optedMeshName;
+        if (`objExists $optedMeshShapeName`) delete $optedMeshShapeName; 
+    
+        createNode transform -n $optedMeshName;
+        createNode mesh -n $optedMeshShapeName -p $optedMeshName;
+        sets -add initialShadingGroup $optedMeshShapeName;
+        
+        string $meshOutName = $meshOptName + ".outGeo";
+        string $meshInName = $optedMeshShapeName + ".inMesh";
+        
+        connectAttr $meshOutName $meshInName;
+    }
+}
+
+global string $gMainWindow;
+setParent $gMainWindow;
+menu -label "Telescope" -tearOff true;
+    menuItem -label "CreateCurve" -command "createCurveSelected()";
+    menuItem -label "OptimizeCurve" -command "optCurveSelected()"; 
+    menuItem -label "AddCurve" -command "addCurve()";
+    menuItem -label "LoadMesh" -command "loadObj()";
+    menuItem -label "optMesh" -command "optObj()";
+    menuItem -label "generateFromMesh" -command "genMesh()"
